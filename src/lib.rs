@@ -66,7 +66,7 @@ pub struct RecoveryConfig<BlockNumber> {
 pub struct ActiveRecovery<BlockNumber, AccountId> {
 	/// The block number when the recovery process started.
 	created: BlockNumber,
-	/// The friends which have vouched so far. Always sorted.
+	/// The friends which have approved so far. Always sorted.
 	approved_friends: Vec<AccountId>,
 }
 

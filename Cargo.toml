@@ -1,11 +1,13 @@
 [package]
-authors = ['Anonymous']
-description = 'FRAME pallet template'
+name = 'secret-social-recovery'
+version = '2.0.0-alpha.3'
+authors = ['hupeng <bitrocks.hu@gmail.com>']
+description = 'A Substrate FRAME pallet for Secret Social Recovery(PoC)'
+repository = "https://github.com/bitrocks/secret-social-recovery"
+readme = "README.md"
 edition = '2018'
 homepage = 'https://substrate.dev'
-license = 'Unlicense'
-name = 'pallet-template'
-version = '2.0.0-alpha.3'
+license = 'MIT'
 
 [features]
 default = ['std']
@@ -24,9 +26,8 @@ version = '1.0.0'
 
 [dependencies.frame-support]
 default-features = false
-git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+git = 'https://github.com/bitrocks/substrate.git'
+branch = 'hack'
 
 [dependencies.safe-mix]
 default-features = false
@@ -34,25 +35,40 @@ version = '1.0.0'
 
 [dependencies.sp-core]
 default-features = false
-git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+git = 'https://github.com/bitrocks/substrate.git'
+branch = 'hack'
+
+[dependencies.sp-std]
+default-features = false
+git = 'https://github.com/bitrocks/substrate.git'
+branch = 'hack'
 
 [dependencies.sp-io]
 default-features = false
-git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+git = 'https://github.com/bitrocks/substrate.git'
+branch = 'hack'
 
 [dependencies.sp-runtime]
 default-features = false
-git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+git = 'https://github.com/bitrocks/substrate.git'
+branch = 'hack'
 
 [dependencies.system]
 default-features = false
-git = 'https://github.com/paritytech/substrate.git'
+git = 'https://github.com/bitrocks/substrate.git'
 package = 'frame-system'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+branch = 'hack'
+
+[dev-dependencies.pallet-balances]
+git = 'https://github.com/bitrocks/substrate.git'
+package = 'pallet-balances'
+branch = 'hack'
+
+
+[dependencies.merkle]
+git = 'https://github.com/bitrocks/merkle.rs'
+rev = 'e2546f04c2592f13a394134261e79fd562a99fa4'
+
+
+[dependencies.ring]
+version = "^0.16.1"

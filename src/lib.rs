@@ -134,11 +134,15 @@ decl_error! {
 		MerkleProofInvalid,
 		/// A recovery process has not started for this account
 		NotStarted,
+		// The friend already approved the recovery process
 		AlreadyApproved,
-		InconsistentProofValue,
+		// The lost account  is already proxied to a rescuer
 		AlreadyProxied,
+		// The checked_add result is overflowed
 		Overflow,
+		// The recovery process is still within the delay period and can't be claim right now
 		DelayPeriod,
+		// The recovery process hasn't reach the required threshold
 		UnderThreshold
 	}
 }
@@ -224,7 +228,23 @@ decl_module! {
 			Self::deposit_event(RawEvent::RecoveryInitiated(lost, rescuer));
 		}
 
-		// fn approve_recovery(origin, lost: T::AccountId, rescuer: T::AccountId, approver: T::AccountId, signature: Signature, proof: Proof<Vec<u8>>) {
+		/// Parameters:
+		/// - `lost`: the account you want to rescue
+		/// - `rescuer`: the account used to rescue the lost account
+		/// - `sigature`: the signature of a friend that's included in the merkle tree, on the message
+		/// 	of the slice of `rescuer` account, mean that friend approving the recovery process
+		/// - `proof`: a merkle proof that prove the friend is truly included in the merkle tree
+		///
+		/// # <weight>
+		/// Key: F(len of friends commited to the merkle tree), A(len of friends already approved)
+		/// - one verification to check the signature validity,
+		/// - one verification to check the merkle proof validity
+		/// - one storage read to get the recovery config, O(1),
+		/// - one storage read to get the active recovery process, O(1), Codec O(A)
+		/// - one binary search to confirm the friend's account is already approved, O(log(A))
+		/// - one event
+		/// # </weight>
+		#[weight = SimpleDispatchInfo::FixedNormal(100_000)]
 		fn approve_recovery(origin, lost: T::AccountId, rescuer: T::AccountId, signature: Signature, proof: Proof<T::AccountId>) {
 			let _ = ensure_signed(origin);
 			// Check that the lost account is recoverable
@@ -247,6 +267,8 @@ decl_module! {
 			Self::deposit_event(RawEvent::ApprovedRecovery(lost, rescuer, approver));
 		}
 
+
+		#[weight = SimpleDispatchInfo::FixedNormal(100_000)]
 		fn claim_recovery(origin, lost: T::AccountId) {
 			let rescuer = ensure_signed(origin)?;
 			let recovery_config = Self::recovery_config(&lost).ok_or(Error::<T>::NotRecoverable)?;

@@ -274,7 +274,7 @@ fn claim_recovery_works() {
 
 		let call = Box::new(Call::Balances(BalancesCall::transfer(charlie, 10)));
 		assert_ok!(Recovery::as_recovered(Origin::signed(bob), alice, call));
-		// Account 1 has successfully drained the funds from account 5
+		// Account bob has successfully drained the funds from account alice
 		assert_eq!(Balances::free_balance(charlie), 110);
 		assert_eq!(Balances::free_balance(alice), 90);
 	});

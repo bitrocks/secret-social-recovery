@@ -11,7 +11,7 @@ to blockchain during the recovery period. It's both space effecient and privacy-
 
 The idea of secret social recovery is inspired by both [Shawn Tabrizi's youtube talks](https://www.youtube.com/watch?v=ZfhEAzRCFBc) and [EIP2494: Secret Multisig Recovery](https://github.com/ethereum/EIPs/pull/2429)。
 
-There can be multiple ways to implement a membership proof while maintain privacy, including both ZK or NonZK approachs. Here I take the simple path of taking advantage of `merkle inclusion proof` , although is not zero knowledge. More complex solutions might be implemented in the future.
+There can be multiple ways to implement a membership proof while maintain privacy, including both ZK and NonZK approachs. Here I take the simple path of taking advantage of `merkle inclusion proof` , although is not zero knowledge. More complex solutions might be implemented in the future.
 
 ## Implementation
 

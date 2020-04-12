@@ -255,7 +255,7 @@ decl_module! {
 			// Check that the friend's signature on resuer account is valid
 			ensure!(sr25519::Pair::verify(&signature, rescuer.clone(), &sr25519::Public(approver_public)), Error::<T>::SignatureInvalid);
 			// ensure!(sr25519::Pair::verify(&signature, rescuer.clone(), &sr25519::Public(public)), Error::<T>::SignatureInvalid);
-			let recovery_config = Self::recovery_config(&lost).unwrap();
+			let recovery_config = Self::recovery_config(&lost).ok_or(Error::<T>::NotRecoverable)?;
 			// Check that the merkle proof is valid so the friend's account is in recovery group
 			ensure!(proof.validate(&recovery_config.friends_merkle_root), Error::<T>::MerkleProofInvalid);
 			let mut active_recovery = Self::active_recovery(&lost, &rescuer).ok_or(Error::<T>::NotStarted)?;
